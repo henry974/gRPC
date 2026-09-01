@@ -33,5 +33,5 @@ def run(num_chamadas: int, ip: str, S: list, file: str):
 if __name__ == "__main__":
     run(num_chamadas = 20, 
         ip = "localhost:50051", 
-        S = [10000, 1, 100000, 1000000], 
+        S = [1, 10000, 100000, 1000000], 
         file = "benchmark.log")
