@@ -14,7 +14,8 @@ def gerar_grafico():
 
   
   plt.figure(figsize=(9, 6))
-  plt.bar(
+  bars=plt.bar(
+    
       df_medio["tamanho_bytes"].astype(str),
       df_medio["rtt_ms"],
       color="royalblue",
