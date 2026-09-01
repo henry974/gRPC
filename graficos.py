@@ -20,6 +20,7 @@ def gerar_grafico():
       color="royalblue",
       edgecolor="black",
   )
+  plt.bar_label(bars, fmt='%.2f', padding=3)
   plt.xlabel("Tamanho da Mensagem (bytes)", fontsize=12)
   plt.ylabel("RTT Médio (ms)", fontsize=12)
   plt.title("Desempenho gRPC: RTT Médio vs Tamanho do Payload", fontsize=14)
