@@ -9,7 +9,7 @@ def run(num_chamadas: int, ip: str, S: list, file: str):
     print("Iniciando benchmark...")
 
     with grpc.insecure_channel(ip) as channel:
-        stub = mensagem_pb2_grpc.ServicoDesempenhoStub(channel)
+        stub = experimento_pb2_grpc.ServicoDesempenhoStub(channel)
 
         with open(file, mode='w', newline='') as f:
             writer = csv.writer(f)
@@ -18,7 +18,7 @@ def run(num_chamadas: int, ip: str, S: list, file: str):
             for t in S:
                 payload = b'0' * t
                 for i in range(1, num_chamadas + 1):
-                    msg = mensagem_pb2.MensagemRequisicao(payload = payload)
+                    msg = experimento_pb2.MensagemRequisicao(payload = payload)
 
                     begin = time.perf_counter()
                     ans = stub.Enviar(msg)
