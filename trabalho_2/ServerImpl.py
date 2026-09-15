@@ -7,8 +7,8 @@ from collections import defaultdict
 
 class PubSubServicer(pubsub_pb2_grpc.PubSubServiceServicer):
     def __init__(self):
-        self.objs = {} # Equivalente ao HashMap<Integer, Cell> objs
-        self.clientes = defaultdict(list) # Equivalente ao HashMap de HashSets
+        self.objs = {} 
+        self.clientes = defaultdict(list) 
 
     def Subscribe(self, request, context):
         key = request.key
@@ -17,12 +17,12 @@ class PubSubServicer(pubsub_pb2_grpc.PubSubServiceServicer):
 
         print(f"[{request.client_name}] Inscrito na chave: {key}")
 
-        # Se já existir uma Cell armazenada para essa chave, envia imediatamente
+        
         if key in self.objs:
             client_queue.put(self.objs[key])
 
         try:
-            # Mantém a stream aberta enviando mensagens quando chegam na fila
+        
             while context.is_active():
                 try:
                     cell = client_queue.get(timeout=1.0)
@@ -36,10 +36,10 @@ class PubSubServicer(pubsub_pb2_grpc.PubSubServiceServicer):
         key = request.key
         cell = request.cell
         
-        # Armazena a célula na chave
+        
         self.objs[key] = cell
         
-        # Faz o dispatch para todos os clientes inscritos
+        
         for client_queue in self.clientes[key]:
             client_queue.put(cell)
             
