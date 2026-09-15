@@ -1,0 +1,28 @@
+syntax = "proto3";
+package pubsub;
+
+service PubSubService {
+    // Equivalente ao subscribe e receive do Java RMI
+    rpc Subscribe (SubscribeRequest) returns (stream Cell) {}
+    
+    // Equivalente ao publish
+    rpc Publish (PublishRequest) returns (PublishResponse) {}
+}
+
+message SubscribeRequest {
+    int32 key = 1;
+    string client_name = 2;
+}
+
+message PublishRequest {
+    int32 key = 1;
+    Cell cell = 2;
+}
+
+message PublishResponse {
+    bool success = 1;
+}
+
+message Cell {
+    int32 contents = 1; // Mapeado do int contents de Cell.java
+}
