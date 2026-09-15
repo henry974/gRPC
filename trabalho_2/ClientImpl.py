@@ -7,14 +7,14 @@ import pubsub_pb2_grpc
 def receive_messages(stub, sub_key, name):
     request = pubsub_pb2.SubscribeRequest(key=sub_key, client_name=name)
     try:
-        # Loop para processar o streaming de respostas (equivalente a receive(Cell o))
+
         for cell in stub.Subscribe(request):
             print(f"Value of cell: {cell.contents}") 
     except grpc.RpcError as e:
         print(f"Conexão encerrada com tópico {sub_key}.")
 
 def main():
-    # Tratamento dos argumentos da linha de comando
+
     if len(sys.argv) == 5:
         host, name, A, B = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4])
     elif len(sys.argv) == 4:
@@ -30,11 +30,11 @@ def main():
     print(f"Subscribing to: {A}\nPublishing: {B}\n") 
 
     if A != 0:
-        # Roda o subscriber em thread paralela para não bloquear a publicação[cite: 3]
+
         threading.Thread(target=receive_messages, args=(stub, A, name), daemon=True).start()
 
     if B != 0:
-        # Cria uma nova Cell com o valor de A, conforme a lógica Java
+
         cell = pubsub_pb2.Cell(contents=A) 
         request = pubsub_pb2.PublishRequest(key=B, cell=cell)
         stub.Publish(request) 
