@@ -10,12 +10,12 @@ service PubSubService {
 }
 
 message SubscribeRequest {
-    int32 key = 1;
+    string key = 1;
     string client_name = 2;
 }
 
 message PublishRequest {
-    int32 key = 1;
+    string key = 1;
     Cell cell = 2;
 }
 
@@ -24,5 +24,5 @@ message PublishResponse {
 }
 
 message Cell {
-    int32 contents = 1; // Mapeado do int contents de Cell.java
+    string contents = 1; // Mapeado do int contents de Cell.java
 }

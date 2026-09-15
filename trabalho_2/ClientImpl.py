@@ -15,10 +15,10 @@ def receive_messages(stub, sub_key, name):
 
 def main():
 
-    if len(sys.argv) == 5:
-        host, name, A, B = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4])
-    elif len(sys.argv) == 4:
-        host, name, A, B = "localhost", sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
+    if len(sys.argv) == 6:
+        host, name, A, B,msg = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]
+    elif len(sys.argv) == 5:
+        host, name, A, B, msg = "localhost", sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
     else:
         print("Usage: python client.py [[host]] name sub_key pub_key") 
         sys.exit(1)
@@ -29,18 +29,17 @@ def main():
 
     print(f"Subscribing to: {A}\nPublishing: {B}\n") 
 
-    if A != 0:
+    if A != "0":
 
         threading.Thread(target=receive_messages, args=(stub, A, name), daemon=True).start()
 
-    if B != 0:
+    if B != "0":
 
-        cell = pubsub_pb2.Cell(contents=A) 
+        cell = pubsub_pb2.Cell(contents=msg) 
         request = pubsub_pb2.PublishRequest(key=B, cell=cell)
         stub.Publish(request) 
 
-    if A != 0:
-        # Impede que o script morra caso o cliente apenas se inscreva (A != 0)
+    if A != "0":
         try:
             threading.Event().wait()
         except KeyboardInterrupt:
