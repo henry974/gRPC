@@ -2,10 +2,10 @@ syntax = "proto3";
 package pubsub;
 
 service PubSubService {
-    // Equivalente ao subscribe e receive do Java RMI
+    
     rpc Subscribe (SubscribeRequest) returns (stream Cell) {}
     
-    // Equivalente ao publish
+    
     rpc Publish (PublishRequest) returns (PublishResponse) {}
 }
 
